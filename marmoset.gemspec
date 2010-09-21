@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'marmoset'
-  s.version     = 1.0
+  s.version     = '1.0.1'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Jamie Wong']
   s.summary     = 'Submit to UW Marmoset from the command line'
@@ -12,5 +12,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'choice',    '>= 0.1.4'
 
   s.files               =  ['bin/marmoset']
-  s.default_executable  =  'marmoset'
+  s.executables         =  ['marmoset'] 
 end
