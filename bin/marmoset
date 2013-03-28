@@ -45,7 +45,7 @@ class MarmosetClient
 
     @course_index_page = @agent.submit login_submit_page.forms.first
   rescue InvalidLogin
-    say 'Invalid Username/Password'
+    say 'Invalid Username/Password.'
     exit
   end
 
@@ -112,7 +112,7 @@ class MarmosetClient
       @submit_page = problem_link.click
     end
   rescue ProblemNotFound
-    say "Problem #{@problem} could not be found in #{@course}"
+    say "Problem #{@problem} could not be found in #{@course}."
     say "Options are: #{problem_links.collect{|x| x[0].strip}.sort.join(', ')}"
     exit
   end
@@ -124,9 +124,9 @@ class MarmosetClient
     form = @submit_page.forms.first
     @submit_page.forms.first.file_uploads.first.file_name = @filename
     @submit_response_page = @agent.submit(form)
-    say "Assignment submitted succesfully"
+    say "Assignment submitted successfully."
   rescue Mechanize::ResponseCodeError => e
-    say "There was a problem submitting your assignment. Submit manually"
+    say "There was a problem submitting your assignment. Submit manually."
   end
 end
 
