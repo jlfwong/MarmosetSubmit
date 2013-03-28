@@ -126,6 +126,49 @@ class MarmosetClient
     @submit_response_page = @agent.submit(form)
     say "Assignment submitted successfully."
   rescue Mechanize::ResponseCodeError => e
+      puts <<-EOF
+            @LGf                                                 
+           tClfC                                                 
+            @@@@G               @@C                              
+                L@           il@Lt@                              
+                 ;@        G@@;@tl@                              
+                  @       @t   .@@l                              
+                  @i     i@                                      
+                  ;f     G,              ......                  
+                  ,@     @        :C@@@@@@@@@@@@@@C              
+                   @     C   .iG@@@CttlllllllllltLG@L                 
+                 ,,@,,,.@@fllllllllllllllllllllllllll@           
+               l@@@@@@@@@flllllllllllllllllllllllllli@.          
+             l@@f  G f@LLflllllllllllllllllllllllllli@.                   
+                C@@fllllLflllllllllllllllllllllltfC@@@@@@l;      
+               L@t@tllllLfllllllllllllllllllllllllll@ ;tL@@G     
+        .i@@@@@@tlGtllllLflllllllllllllllllllllllllt@     f@     
+       @@@@GC:@GllllllllLflllllllllllllllllllllllllC;      G@    
+     i@G    L@fGlllllllllllllllllllllllllllllllllll@       :@    
+    C@f    @;  .GlllllllllllllllllllllllllllllllllL@        @t  
+         @f@@.tf CllLC, lCllllllllllllllllllllllt@           t@  
+         @G@G.;C LlLllf. ftlllllllllllllllllllll@:            @i 
+         @G@f ff LlLG@@@.,Glllllllllllltlllllll@i             l@ 
+        :GC@:,@. GLL@@iLi Glllllllllllt@@GCfftGL                 
+        iC:@G@; ;CGL@@.iL LllllllllllllltLG@@@@@@@t              
+        .G .:   GlCL@C if Llllllllllllllllll@LiLG@@@f            
+     :G@@@     lLtCf@l C, Cllllllllllllllll@t     .G@            
+   ,@@@@;i@   tCltfi@ffG .Glllllllllllllll@l        @G           
+  ,@@G    ,@fGLlltf tCC, lflllllllllllllt@f         G@           
+ .@f        @@tlllG     .GlCGtlllllllllG@i          .@.          
+ @G          @@CliC;    @tllL@ClllllfG@G             @l          
+t@            i@@CtGi,i@llllitG@fLG@@G.              f@          
+@f              i@@GGGLtfLLCG@@@@@@,                 :@     
+L                 ,lfGGGGGGtti;  i@@l                 @;         
+                                   @@                 Cf         
+                                   @@                  ,         
+                                   GC                            
+                                   @@                            
+                                   C@                            
+                                    @f                           
+                                    @@                           
+                                    f@                         
+     EOF
     say "There was a problem submitting your assignment. Submit manually."
   end
 end
