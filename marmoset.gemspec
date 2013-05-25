@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'marmoset'
-  s.version     = '1.0.1'
+  s.version     = '1.0.2'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Jamie Wong']
   s.summary     = 'Submit to UW Marmoset from the command line'
