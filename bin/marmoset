@@ -45,7 +45,7 @@ class MarmosetClient
 
     @course_index_page = @agent.submit login_submit_page.forms.first
   rescue InvalidLogin
-    say 'Invalid Username/Password'
+    say 'Invalid Username/Password.'
     exit
   end
 
@@ -112,7 +112,7 @@ class MarmosetClient
       @submit_page = problem_link.click
     end
   rescue ProblemNotFound
-    say "Problem #{@problem} could not be found in #{@course}"
+    say "Problem #{@problem} could not be found in #{@course}."
     say "Options are: #{problem_links.collect{|x| x[0].strip}.sort.join(', ')}"
     exit
   end
@@ -124,13 +124,56 @@ class MarmosetClient
     form = @submit_page.forms.first
     @submit_page.forms.first.file_uploads.first.file_name = @filename
     @submit_response_page = @agent.submit(form)
-    say "Assignment submitted succesfully"
+    say "Assignment submitted successfully."
   rescue Mechanize::ResponseCodeError => e
-    say "There was a problem submitting your assignment. Submit manually"
+      puts <<-EOF
+            @LGf                                                 
+           tClfC                                                 
+            @@@@G               @@C                              
+                L@           il@Lt@                              
+                 ;@        G@@;@tl@                              
+                  @       @t   .@@l                              
+                  @i     i@                                      
+                  ;f     G,              ......                  
+                  ,@     @        :C@@@@@@@@@@@@@@C              
+                   @     C   .iG@@@CttlllllllllltLG@L                 
+                 ,,@,,,.@@fllllllllllllllllllllllllll@           
+               l@@@@@@@@@flllllllllllllllllllllllllli@.          
+             l@@f  G f@LLflllllllllllllllllllllllllli@.                   
+                C@@fllllLflllllllllllllllllllllltfC@@@@@@l;      
+               L@t@tllllLfllllllllllllllllllllllllll@ ;tL@@G     
+        .i@@@@@@tlGtllllLflllllllllllllllllllllllllt@     f@     
+       @@@@GC:@GllllllllLflllllllllllllllllllllllllC;      G@    
+     i@G    L@fGlllllllllllllllllllllllllllllllllll@       :@    
+    C@f    @;  .GlllllllllllllllllllllllllllllllllL@        @t  
+         @f@@.tf CllLC, lCllllllllllllllllllllllt@           t@  
+         @G@G.;C LlLllf. ftlllllllllllllllllllll@:            @i 
+         @G@f ff LlLG@@@.,Glllllllllllltlllllll@i             l@ 
+        :GC@:,@. GLL@@iLi Glllllllllllt@@GCfftGL                 
+        iC:@G@; ;CGL@@.iL LllllllllllllltLG@@@@@@@t              
+        .G .:   GlCL@C if Llllllllllllllllll@LiLG@@@f            
+     :G@@@     lLtCf@l C, Cllllllllllllllll@t     .G@            
+   ,@@@@;i@   tCltfi@ffG .Glllllllllllllll@l        @G           
+  ,@@G    ,@fGLlltf tCC, lflllllllllllllt@f         G@           
+ .@f        @@tlllG     .GlCGtlllllllllG@i          .@.          
+ @G          @@CliC;    @tllL@ClllllfG@G             @l          
+t@            i@@CtGi,i@llllitG@fLG@@G.              f@          
+@f              i@@GGGLtfLLCG@@@@@@,                 :@     
+L                 ,lfGGGGGGtti;  i@@l                 @;         
+                                   @@                 Cf         
+                                   @@                  ,         
+                                   GC                            
+                                   @@                            
+                                   C@                            
+                                    @f                           
+                                    @@                           
+                                    f@                         
+     EOF
+    say "There was a problem submitting your assignment. Submit manually."
   end
 end
 
-PROGRAM_VERSION = 1.0
+PROGRAM_VERSION = 1.0.2
 
 Choice.options do
   option :username do
@@ -176,7 +219,7 @@ Choice.options do
     long  '--version'
     desc  'Show Version'
     action do
-      puts "#{File.basename(__FILE__)} Marmoset CLI v#{PROGRAM_VERSION}"
+      puts "#{File.basename(__FILE__)} MarmosetSubmit CLI v#{PROGRAM_VERSION}"
       exit
     end
   end
