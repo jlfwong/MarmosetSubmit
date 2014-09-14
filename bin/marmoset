@@ -88,17 +88,35 @@ class MarmosetClient
     problem_links = {}
 
     @course_page.links.find_all{|l| l.href.include? 'submitProject.jsp'}.each do |view_link|
+
       index = @course_page.links.find_index{|l| l.href == view_link.href}
       named_link = @course_page.links[index-2]
       problem_links[named_link.text] = view_link
     end
+    if @filename.nil?
+      problem_links.each do |x|
+        name = x[0].strip
 
-    if @problem.nil?
+        # Check if there is a file with acceptable extension
+        extensions_to_check = ['.txt', '.c', '.zip']
+        extensions_to_check.each do |ext|
+          if File.exists?(name+ext)
+            problem_link = x[1]
+            @submit_page = problem_link.click
+            @filename = name+ext
+            submit_problem
+            break
+          end
+        end
+      end
+    elsif 
+      @problem.nil?
       choose do |menu|
         problem_links.each do |(name,problem_link)|
           menu.choice(name.strip) do
             @problem = name
             @submit_page = problem_page.click
+            submit_problem
           end
         end
       end
@@ -107,9 +125,9 @@ class MarmosetClient
         prob_name.downcase.include? @problem.downcase
       }
       raise ProblemNotFound if problem_link.nil?
-
       problem_link = problem_link[1]
       @submit_page = problem_link.click
+      submit_problem
     end
   rescue ProblemNotFound
     say "Problem #{@problem} could not be found in #{@course}."
@@ -118,62 +136,19 @@ class MarmosetClient
   end
 
   def submit_problem
-    say "Submitting ..."
+    print "Submitting #{@filename} ..."
     select_problem if @submit_page.nil?
 
     form = @submit_page.forms.first
     @submit_page.forms.first.file_uploads.first.file_name = @filename
     @submit_response_page = @agent.submit(form)
-    say "Assignment submitted successfully."
+    print " success!\n"
   rescue Mechanize::ResponseCodeError => e
-      puts <<-EOF
-            @LGf                                                 
-           tClfC                                                 
-            @@@@G               @@C                              
-                L@           il@Lt@                              
-                 ;@        G@@;@tl@                              
-                  @       @t   .@@l                              
-                  @i     i@                                      
-                  ;f     G,              ......                  
-                  ,@     @        :C@@@@@@@@@@@@@@C              
-                   @     C   .iG@@@CttlllllllllltLG@L                 
-                 ,,@,,,.@@fllllllllllllllllllllllllll@           
-               l@@@@@@@@@flllllllllllllllllllllllllli@.          
-             l@@f  G f@LLflllllllllllllllllllllllllli@.                   
-                C@@fllllLflllllllllllllllllllllltfC@@@@@@l;      
-               L@t@tllllLfllllllllllllllllllllllllll@ ;tL@@G     
-        .i@@@@@@tlGtllllLflllllllllllllllllllllllllt@     f@     
-       @@@@GC:@GllllllllLflllllllllllllllllllllllllC;      G@    
-     i@G    L@fGlllllllllllllllllllllllllllllllllll@       :@    
-    C@f    @;  .GlllllllllllllllllllllllllllllllllL@        @t  
-         @f@@.tf CllLC, lCllllllllllllllllllllllt@           t@  
-         @G@G.;C LlLllf. ftlllllllllllllllllllll@:            @i 
-         @G@f ff LlLG@@@.,Glllllllllllltlllllll@i             l@ 
-        :GC@:,@. GLL@@iLi Glllllllllllt@@GCfftGL                 
-        iC:@G@; ;CGL@@.iL LllllllllllllltLG@@@@@@@t              
-        .G .:   GlCL@C if Llllllllllllllllll@LiLG@@@f            
-     :G@@@     lLtCf@l C, Cllllllllllllllll@t     .G@            
-   ,@@@@;i@   tCltfi@ffG .Glllllllllllllll@l        @G           
-  ,@@G    ,@fGLlltf tCC, lflllllllllllllt@f         G@           
- .@f        @@tlllG     .GlCGtlllllllllG@i          .@.          
- @G          @@CliC;    @tllL@ClllllfG@G             @l          
-t@            i@@CtGi,i@llllitG@fLG@@G.              f@          
-@f              i@@GGGLtfLLCG@@@@@@,                 :@     
-L                 ,lfGGGGGGtti;  i@@l                 @;         
-                                   @@                 Cf         
-                                   @@                  ,         
-                                   GC                            
-                                   @@                            
-                                   C@                            
-                                    @f                           
-                                    @@                           
-                                    f@                         
-     EOF
-    say "There was a problem submitting your assignment. Submit manually."
+      say "Error submitting file: #{@filename}"
   end
 end
 
-PROGRAM_VERSION = 1.0.2
+PROGRAM_VERSION = '1.0.2'
 
 Choice.options do
   option :username do
@@ -203,7 +178,7 @@ Choice.options do
     desc    'Assignment problem name, e.g. A1P4'
   end
 
-  option :filename, :required => true do
+  option :filename do #, :required => true 
     short   '-f'
     long    '--infile=FILENAME'
     desc    'The file to submit to marmoset'
@@ -229,4 +204,3 @@ client = MarmosetClient.new(Choice.choices)
 client.login
 client.select_course
 client.select_problem
-client.submit_problem

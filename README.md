@@ -8,13 +8,22 @@ Installation is done through [RubyGems][2]: `gem install marmoset`. Depending on
 ## Usage
 MarmosetSubmit installs a `marmoset` executable on your system. The typical usage of it is best illustrated with an example.
 
+### Submit to a single problem
 Let's say you want to submit a file in the current directory named `wlppgen.ss` as your submission to part 4 of assignment 11 in CS 241 (which has the 'project name' of "A11P4" on Marmoset). You'd run:
 
 ``marmoset -u YourQuestUsername -c cs241 -a a11p4 -f wlppgen.ss``
 
-You'll then be prompted for your Quest password, every time you run a `marmoset` command like this. If you'd like to skip the password prompt, you can include your password in the command like so:
+You will be prompted for your Quest password every time you run a `marmoset` command like this. If you'd like to skip the password prompt, you can include your password in the command like so:
 
-``marmoset -u YourQuestUsername -p YourQuestPassword -c cs241 -a a11p4 -f wlppgen.ss``
+``marmoset -u YourQuestUsername ``**-p YourQuestPassword**`` -c cs241 -a a11p4 -f wlppgen.ss``
+
+### Submit to multiple problems
+You can also submit many problems at once. For example say on assignment A1 there is a question with 10 parts, each with its own .txt file. Instead of manually submitting 10 times, simply run:
+
+``marmoset -u YourQuestUsername -c cs246``
+
+This will go through all problem titles listed on marmoset and submit the matching file, with a .txt, .c, or .zip extension.
+
 
 Here are all of the options, in more detail:
 
